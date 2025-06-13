@@ -19,6 +19,7 @@ from datetime import datetime
 import requests
 from openai import AsyncOpenAI
 import json
+import httpx
 
 # pyright: ignore[reportMissingImports]
 
@@ -143,7 +144,9 @@ async def get_tweet(tweet_id):
         "Authorization": f"Bearer {BEARER_TOKEN}",
     }
     params = {"tweet.fields": "created_at,author_id,text,public_metrics"}
-    response = requests.get(url, headers=headers, params=params)
+
+    async with httpx.AsyncClient() as client:
+        response = await client.get(url, headers=headers, params=params)
 
     if response.status_code == 200:
         return response.json()["data"]["text"]
@@ -237,16 +240,16 @@ async def detect_agent(twitter_id: str = Form(...)):
                         content={"message": "No agent type determined."},
                     )
                 await add_records(twitter_id, agent_type)
+                return JSONResponse(
+                    status_code=200,
+                    content={"message": "Tweet data retrieved and record added."},
+                )
             else:
                 logger.info("No response needed for this tweet.")
                 return JSONResponse(
                     status_code=200,
                     content={"message": "No response needed for this tweet."},
                 )
-            return JSONResponse(
-                status_code=200,
-                content={"message": "Tweet data retrieved and record added."},
-            )
         else:
             return JSONResponse(
                 status_code=404,

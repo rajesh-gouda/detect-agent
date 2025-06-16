@@ -1,0 +1,42 @@
+{
+	"info": {
+		"_postman_id": "688d7f08-3f6b-4631-acbd-62fc47c31231",
+		"name": "detect-agent",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23014523"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8000/detect-agent",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "twitter_id",
+							"value": "1923031562842492973",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://3.80.116.90:5007/detect-agent",
+					"protocol": "http",
+					"host": [
+						"3",
+						"80",
+						"116",
+						"90"
+					],
+					"port": "5007",
+					"path": [
+						"detect-agent"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
